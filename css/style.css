@@ -16,7 +16,7 @@ body {
     left: 500px;
     width: 170px;
     height: 175px;
-    border: solid black 1px;
+    background-size: cover;
 }
 
 #obstacle {
@@ -25,7 +25,10 @@ body {
     right: 0;
     width: 75px;
     height: 75px;
-    border: solid black 1px;
+    background-image: url('/img/stone.png');
+    background-size: cover;
+    animation: rotateAnimation 1s infinite linear;
+
 }
 
 .jump {
@@ -36,4 +39,12 @@ body {
     0% { transform: translateY(0); }
     50% { transform: translateY(-300px); }
     100% { transform: translateY(0); }
+}
+
+@keyframes rotateAnimation {
+    0% { transform: rotate(0); }
+    25% { transform: rotate(-90deg); }
+    50% { transform: rotate(-180deg); }
+    75% { transform: rotate(-270deg); }
+    100% { transform: rotate(-360deg); }
 }
