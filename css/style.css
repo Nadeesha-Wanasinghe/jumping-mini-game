@@ -1,50 +1,30 @@
-body {
-    margin: 0;
-    overflow: hidden;
-}
-
-#game-container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background-color: #f0f0f0;
-}
-
-#player {
+.overlay {
     position: absolute;
-    bottom: 110px;
-    left: 500px;
-    width: 170px;
-    height: 175px;
-    background-size: cover;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    z-index: 1;
 }
 
-#obstacle {
-    position: absolute;
-    bottom: 120px;
-    right: 0;
-    width: 75px;
-    height: 75px;
-    background-image: url('/img/stone.png');
-    background-size: cover;
-    animation: rotateAnimation 1s infinite linear;
-
+#btn-start{
+    position: fixed;
+    width: 205px;
+    height: 55px;
+    font-size: 1.5rem;
+    left: calc(50vw - 110px);
+    top: calc(50vh - 25px);
+    z-index: 2;
+    border-width: 3px;
+    animation: pulse 1s infinite linear; 
+    border-radius: 55px;
+    
 }
 
-.jump {
-    animation: jumpAnimation 1s ease-out;
-}
-
-@keyframes jumpAnimation {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-300px); }
-    100% { transform: translateY(0); }
-}
-
-@keyframes rotateAnimation {
-    0% { transform: rotate(0); }
-    25% { transform: rotate(-90deg); }
-    50% { transform: rotate(-180deg); }
-    75% { transform: rotate(-270deg); }
-    100% { transform: rotate(-360deg); }
+@keyframes pulse {
+    0% { border-color: #007bff;}
+    50% { border-color: #fcf8f8; }
+    100% { border-color: #007bff;}
 }

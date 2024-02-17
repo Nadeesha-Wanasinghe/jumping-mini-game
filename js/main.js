@@ -1,6 +1,9 @@
 const player = document.querySelector('#player');
 const obstacle = document.querySelector('#obstacle');
+const scoreDisplay = document.querySelector('#score');
+const gameContainer = document.querySelector('#game-container');
 
+let score = 0;
 let isJumping = false;
 let obstacleSpeed = 3;
 
@@ -31,6 +34,11 @@ function jump() {
     }
 }
 
+function updateScore() {
+    score++;
+    scoreDisplay.textContent = 'Score: ' + score;
+}
+
 function checkCollision() {
     const playerRect = player.getBoundingClientRect();
     const obstacleRect = obstacle.getBoundingClientRect();
@@ -44,37 +52,48 @@ function checkCollision() {
             obstacle.style.animation = "none";
             endGame();
         }
-    }
+}
     
 function endGame() {
-    alert('Game Over!');
-    let obstacleSpeed = 3;
+    alert('Game Over!  Your Score: '+score);
+    score = 0;
     obstacle.style.right = '0px';
+    obstacleSpeed = 3;
+    scoreDisplay.textContent = 'Score: 0';
     obstacle.style.animation = "rotateAnimation 1s infinite linear";
 }
 
+
 function moveObstacle() {
-    const currentPosition = parseInt(getComputedStyle(obstacle).right);
-    const newPosition = currentPosition + obstacleSpeed;
+        const currentPosition = parseInt(getComputedStyle(obstacle).right);
+        const newPosition = currentPosition + obstacleSpeed;
 
-    if (newPosition > window.innerWidth) {
-        obstacle.style.right = '0px';
-    } else {
-        obstacle.style.right = newPosition + 'px';
-    }
+        if (newPosition > window.innerWidth) {
+            updateScore();
+            obstacle.style.right = '0px';
+        } else {
+            obstacle.style.right = newPosition + 'px';
+        }
 
-    checkCollision();
+        checkCollision();
 }
 
-document.addEventListener('click', (e)=> {
-    jump();
-  });
+function speed(){
+    setInterval(()=>{
+        obstacleSpeed = Math.floor(Math.random() * 6) + 2;
+    },4000)
+}
+speed();
 
-document.addEventListener('keydown',(e)=>{
+gameContainer.addEventListener('click', (e)=> {
+    jump();
+});
+
+gameContainer.addEventListener('keydown',(e)=>{
     if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'Enter') {
-      jump();
+        jump();
     }
-  });
+});
 
 setInterval(moveObstacle, 0.5);
 
@@ -99,5 +118,4 @@ function renderRunCharacter(){
 setInterval(()=>{
     if(!isJumping){
         renderRunCharacter();
-    }},70); 
-
+}},70); 

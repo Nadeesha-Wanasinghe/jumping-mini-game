@@ -1,0 +1,30 @@
+.jump {
+    animation: jumpAnimation 1s ease-out;
+}
+
+@keyframes jumpAnimation {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-300px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes rotateAnimation {
+    0% { transform: rotate(0); }
+    25% { transform: rotate(-90deg); }
+    50% { transform: rotate(-180deg); }
+    75% { transform: rotate(-270deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes slidingFloor {
+    0%{right: 0;}
+    100%{right: 250%;}
+}
+
+#floor{
+    animation: slidingFloor 8s infinite linear;
+}
+
+#obstacle{
+    animation: rotateAnimation 1s infinite linear;
+}
