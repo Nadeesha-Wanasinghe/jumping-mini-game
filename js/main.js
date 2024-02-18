@@ -2,10 +2,12 @@ const player = document.querySelector('#player');
 const obstacle = document.querySelector('#obstacle');
 const scoreDisplay = document.querySelector('#score');
 const gameContainer = document.querySelector('#game-container');
+const floor = document.querySelector('#floor');
 
 let score = 0;
 let isJumping = false;
 let obstacleSpeed = 3;
+let gameOver = false;
 
 function jump() {
     if (!isJumping) {
@@ -55,16 +57,33 @@ function checkCollision() {
 }
     
 function endGame() {
-    alert('Game Over!  Your Score: '+score);
-    score = 0;
-    obstacle.style.right = '0px';
-    obstacleSpeed = 3;
-    scoreDisplay.textContent = 'Score: 0';
-    obstacle.style.animation = "rotateAnimation 1s infinite linear";
+    gameOver = true;
+
+        Swal.fire({
+            title: 'Game Over',
+            text: 'Your Score:  '+ score,
+            icon: 'warning',
+            confirmButtonText: 'OK',
+            width: '350px',
+            heightAuto: 'false',
+            iconColor: '#b86565',
+            color: 'black'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              gameOver = false;
+              obstacle.style.right = '0px';
+              score = 0;
+              obstacleSpeed = 3;
+              obstacle.style.animation = "rotateAnimation 1s infinite linear";
+              scoreDisplay.textContent = 'Score: 0';
+            }
+          });
+
 }
 
 
 function moveObstacle() {
+    if(!gameOver){
         const currentPosition = parseInt(getComputedStyle(obstacle).right);
         const newPosition = currentPosition + obstacleSpeed;
 
@@ -76,6 +95,7 @@ function moveObstacle() {
         }
 
         checkCollision();
+    }
 }
 
 function speed(){
@@ -86,11 +106,11 @@ function speed(){
 speed();
 
 gameContainer.addEventListener('click', (e)=> {
-    jump();
+    if(!gameOver) jump();
 });
 
-gameContainer.addEventListener('keydown',(e)=>{
-    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'Enter') {
+document.addEventListener('keydown',(e)=>{
+    if ((e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'Enter') && !gameOver ) {
         jump();
     }
 });
@@ -116,6 +136,17 @@ function renderRunCharacter(){
 }
 
 setInterval(()=>{
-    if(!isJumping){
+    if(!isJumping && !gameOver){
         renderRunCharacter();
 }},70); 
+
+setInterval(()=>{
+    if(gameOver){
+        floor.style.animation = 'none';
+        obstacle.style.animation = 'none';
+    }else{
+        floor.style.animation = 'slidingFloor 8s infinite linear';
+        obstacle.style.animation = 'rotateAnimation 1s infinite linear';
+    }
+},5);
+

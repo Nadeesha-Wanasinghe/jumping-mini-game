@@ -21,10 +21,3 @@
     100%{right: 250%;}
 }
 
-#floor{
-    animation: slidingFloor 8s infinite linear;
-}
-
-#obstacle{
-    animation: rotateAnimation 1s infinite linear;
-}
